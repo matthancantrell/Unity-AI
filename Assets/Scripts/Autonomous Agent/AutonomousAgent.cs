@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AutonomousAgent : Agent
@@ -11,6 +13,11 @@ public class AutonomousAgent : Agent
         foreach (var gameObject in gameObjects)
         {
             Debug.DrawLine(transform.position, gameObject.transform.position);
+        }
+        if (gameObjects.Length >= 1)
+        {
+            Vector3 direction = (gameObjects[0].transform.position - transform.position).normalized;
+            movement.ApplyForce(direction * 2);
         }
     }
 }
