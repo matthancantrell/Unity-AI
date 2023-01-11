@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
 
     public Vector3 velocity { get; set; } = Vector3.zero;
     public Vector3 acceleration { get; set; } = Vector3.zero;
+    [Range(1, 10)] public float maxSpeed = 5;
 
     public void ApplyForce(Vector3 force)
     {
@@ -16,9 +17,15 @@ public class Movement : MonoBehaviour
     void LateUpdate()
     {
         velocity += acceleration * Time.deltaTime;
+        velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         transform.position += velocity * Time.deltaTime;
 
         acceleration = Vector3.zero;
+
+        if (velocity.sqrMagnitude > 0.1f)
+        {
+            transform.rotation = Quaternion.LookRotation(velocity);
+        }
     }
     // Start is called before the first frame update
     void Start()
