@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
 {
     public GameObject prefab;
     [SerializeField, Range(1, 50), Tooltip("Speed Control")]public float speed = 0.0f;
+    public float rotationRate = 180;
+    public Transform bulletSpawnLocation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,22 +28,22 @@ public class Player : MonoBehaviour
         transform.localScale = Vector3.one * 5;*/
 
         Vector3 direction = Vector3.zero;
-
-        direction.x = Input.GetAxis("Horizontal");
         direction.z = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.W)) direction.x = +1;
-        if (Input.GetKey(KeyCode.A)) direction.z = +1;
-        if (Input.GetKey(KeyCode.S)) direction.x = -1;
-        if (Input.GetKey(KeyCode.D)) direction.z = -1;
+        Vector3 rotation = Vector3.zero;
+        rotation.y = Input.GetAxis("Horizontal");
 
-        transform.position += direction * speed * Time.deltaTime;
+        Quaternion rotate = Quaternion.Euler(rotation * rotationRate * Time.deltaTime);
+        transform.rotation = transform.rotation * rotate;
+        transform.Translate(direction * speed * Time.deltaTime);
+
+        //transform.position += direction * speed * Time.deltaTime;
 
         if (Input.GetButtonDown("Fire1"))
         {
             Debug.Log("Pew!");
             // Make Gamesound
-            Instantiate(prefab, transform.position, transform.rotation);
+            Instantiate(prefab, bulletSpawnLocation.position, bulletSpawnLocation.rotation);
         }
     }
 }
