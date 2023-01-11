@@ -15,7 +15,6 @@ public class Perception : MonoBehaviour
 
         // Returns an Array of Colliders
         Collider[] colliders = Physics.OverlapSphere(transform.position, distance);
-
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject == gameObject) continue;
@@ -23,9 +22,12 @@ public class Perception : MonoBehaviour
             {
                 // calculate angle from transform forward vector to direction of game object 
                 Vector3 direction = (collider.transform.position - transform.position).normalized;
-                float cos = Vector3.Dot(transform.forward, direction);
-                float angle = Mathf.Acos(cos) * Mathf.Rad2Deg;
-                if (angle <= maxAngle) results.Add(collider.gameObject);
+                float angle = Vector3.Angle(transform.forward, direction);
+
+                if (angle <= maxAngle)
+                {
+                    results.Add(collider.gameObject);
+                }
             }
         }
         
