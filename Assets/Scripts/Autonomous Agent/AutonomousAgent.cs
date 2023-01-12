@@ -12,8 +12,14 @@ public class AutonomousAgent : Agent
     public float wanderRadius = 3;
     public float wanderDisplacement = 5;
 
-    [Range(0, 3)] public float SeekWeight = 0;
-    [Range(0, 3)] public float FleeWeight = 0;
+    [Range(0, 3)] public float SeekWeight;
+    [Range(0, 3)] public float FleeWeight;
+
+    [Range(0, 3)] public float CohesionWeight;
+    [Range(0, 3)] public float SeperationWeight;
+    [Range(0, 3)] public float AlignmentWeight;
+
+    [Range(0, 10)] public float SeperationRadius;
 
     public float wanderAngle { get; set; } = 0;
 
@@ -32,10 +38,14 @@ public class AutonomousAgent : Agent
         }
 
         gameObjects = flockPerception.GetGameObjects();
-
         if (gameObjects.Length > 0)
         {
-            //
+            foreach (var gameObject in gameObjects)
+            {
+                movement.ApplyForce(Steering.Cohesion(this, gameObjects) * CohesionWeight);
+                movement.ApplyForce(Steering.Seperation(this, gameObjects, SeperationRadius) * SeperationWeight);
+                movement.ApplyForce(Steering.Alignment(this, gameObjects, SeperationRadius) * AlignmentWeight);
+            }
         }
 
         if (movement.acceleration.sqrMagnitude <= movement.maxForce * 0.1f)
@@ -45,6 +55,7 @@ public class AutonomousAgent : Agent
 
         transform.position = Utilities.Wrap(transform.position, new Vector3(-10, -10, -10), new Vector3(10, 10, 10));
     }
+
 
 
 }

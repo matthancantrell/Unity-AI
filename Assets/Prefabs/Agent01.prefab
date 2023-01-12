@@ -113,8 +113,8 @@ GameObject:
   - component: {fileID: 3953024479998746973}
   - component: {fileID: 5111440474311913724}
   m_Layer: 0
-  m_Name: Agent
-  m_TagString: Untagged
+  m_Name: Agent01
+  m_TagString: Agent01
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +149,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perception: {fileID: 2791984868254350914}
   movement: {fileID: 136685859424050569}
+  flockPerception: {fileID: 2791984868254350914}
+  wanderDistance: 1
+  wanderRadius: 5
+  wanderDisplacement: 30
+  SeekWeight: 2
+  FleeWeight: 0
 --- !u!114 &2791984868254350914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,8 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de33d4da7428dc46978af621fe68ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagName: 
-  distance: 1
+  tagName: Agent01
+  distance: 10
   maxAngle: 45
 --- !u!114 &136685859424050569
 MonoBehaviour:
