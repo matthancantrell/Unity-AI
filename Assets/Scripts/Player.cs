@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     public GameObject prefab;
     [SerializeField, Range(1, 50), Tooltip("Speed Control")]public float speed = 0.0f;
-    public float rotationRate = 180;
+    [Range(0, 360)]public float rotationRate = 180;
     public Transform bulletSpawnLocation;
 
     // Start is called before the first frame update
