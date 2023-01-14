@@ -150,11 +150,7 @@ MonoBehaviour:
   perception: {fileID: 2791984868254350914}
   movement: {fileID: 136685859424050569}
   flockPerception: {fileID: 2791984868254350914}
-  wanderDistance: 1
-  wanderRadius: 5
-  wanderDisplacement: 30
-  SeekWeight: 2
-  FleeWeight: 0
+  data: {fileID: 11400000, guid: 8b09ef48f924eb843b7c659c8d781466, type: 2}
 --- !u!114 &2791984868254350914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagName: Agent01
-  distance: 10
+  distance: 2.7
   maxAngle: 45
 --- !u!114 &136685859424050569
 MonoBehaviour:

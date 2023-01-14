@@ -7,19 +7,7 @@ using UnityEngine;
 public class AutonomousAgent : Agent
 {
     public Perception flockPerception;
-
-    public float wanderDistance = 1;
-    public float wanderRadius = 3;
-    public float wanderDisplacement = 5;
-
-    [Range(0, 3)] public float SeekWeight;
-    [Range(0, 3)] public float FleeWeight;
-
-    [Range(0, 3)] public float CohesionWeight;
-    [Range(0, 3)] public float SeperationWeight;
-    [Range(0, 3)] public float AlignmentWeight;
-
-    [Range(0, 10)] public float SeperationRadius;
+    public AutonomousAgentData data;
 
     public float wanderAngle { get; set; } = 0;
 
@@ -33,8 +21,8 @@ public class AutonomousAgent : Agent
         }
         if (gameObjects.Length > 0)
         {
-            movement.ApplyForce(Steering.Flee(this, gameObjects[0]) * FleeWeight);
-            movement.ApplyForce(Steering.Seek(this, gameObjects[0]) * SeekWeight);
+            movement.ApplyForce(Steering.Flee(this, gameObjects[0]) * data.fleeWeight);
+            movement.ApplyForce(Steering.Seek(this, gameObjects[0]) * data.seekWeight);
         }
 
         gameObjects = flockPerception.GetGameObjects();
@@ -42,9 +30,9 @@ public class AutonomousAgent : Agent
         {
             foreach (var gameObject in gameObjects)
             {
-                movement.ApplyForce(Steering.Cohesion(this, gameObjects) * CohesionWeight);
-                movement.ApplyForce(Steering.Seperation(this, gameObjects, SeperationRadius) * SeperationWeight);
-                movement.ApplyForce(Steering.Alignment(this, gameObjects, SeperationRadius) * AlignmentWeight);
+                movement.ApplyForce(Steering.Cohesion(this, gameObjects) * data.cohesionWeight);
+                movement.ApplyForce(Steering.Seperation(this, gameObjects, data.separationRadius) * data.separationWeight);
+                movement.ApplyForce(Steering.Alignment(this, gameObjects, data.separationRadius) * data.alignmentWeight);
             }
         }
 
