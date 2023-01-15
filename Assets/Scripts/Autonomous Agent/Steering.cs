@@ -49,11 +49,15 @@ public static class Steering
 
     public static Vector3 Cohesion(Agent agent, GameObject[] neighbors)
     {
+        // Get Center
         Vector3 center = Vector3.zero;
+        // Accumulate Positions of neighbors
         foreach (GameObject neighbor in neighbors)
         {
+            // Add neighbor position to center
             center += neighbor.transform.position;
         }
+        // Calculate the center by dividing the center by the number of neighbors
         center /= neighbors.Length;
 
         // Steer Towards Center
@@ -64,11 +68,42 @@ public static class Steering
 
     public static Vector3 Seperation(Agent agent, GameObject[] neighbors, float radius)
     {
-        return Vector3.zero;
+        Vector3 sepearation = Vector3.zero;
+
+        // Accumulate Separation Vector of neighbors
+        foreach (GameObject neighbor in neighbors)
+        {
+            // Create Separation Vector From Neighbor To Agent
+            Vector3 direction = agent.transform.position - neighbor.transform.position;
+            if (direction.magnitude < radius)
+            {
+                // Scale Direction By Distance (Closer = Stronger)
+                sepearation += direction / direction.sqrMagnitude;
+            }
+        }
+
+        // Steer Toward Separation
+        Vector3 force = CalculateSteering(agent, sepearation);
+
+        return force;
     }
 
     public static Vector3 Alignment(Agent agent, GameObject[] neighbors, float radius)
     {
-        return Vector3.zero;
+        Vector3 averageVelocity = Vector3.zero;
+
+        // Accumulate Velocity Of Neighbors (velocity = forward direction of movement)
+        foreach (GameObject neighbor in neighbors)
+        {
+            // Need To Get The Agent Component Of The Game Object And Then movement velocity
+            averageVelocity += neighbor.GetComponent<Agent>().movement.velocity;
+        }
+        // Calculate avg. by dividing the avg. velocity by the # of neighbors
+        averageVelocity /= neighbors.Length;
+
+        // Steer Towards the avg. velocity of the neighbors
+        Vector3 force = CalculateSteering(agent, averageVelocity);
+
+        return force;
     }
 }

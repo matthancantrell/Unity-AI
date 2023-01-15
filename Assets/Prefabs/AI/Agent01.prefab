@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagName: Agent01
-  distance: 2.7
+  distance: 5.2
   maxAngle: 45
 --- !u!114 &136685859424050569
 MonoBehaviour:
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08988dc458219349831613772adb164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
+  maxSpeed: 10
   minSpeed: 5
   maxForce: 5
 --- !u!33 &2052106826468878016

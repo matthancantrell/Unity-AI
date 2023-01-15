@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 136685859424050569, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
+      propertyPath: maxSpeed
+      value: 1.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 2791984868254350914, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
+      propertyPath: distance
+      value: 2.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3953024479998746973, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
