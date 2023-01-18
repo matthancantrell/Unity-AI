@@ -46,4 +46,12 @@ public class Player : MonoBehaviour
             Instantiate(prefab, bulletSpawnLocation.position, bulletSpawnLocation.rotation);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            FindObjectOfType<AsteroidGameManager>()?.SetGameOver();
+        }
+    }
 }

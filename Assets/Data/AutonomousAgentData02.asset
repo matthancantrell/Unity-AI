@@ -18,6 +18,6 @@ MonoBehaviour:
   separationRadius: 1
   seekWeight: 1
   fleeWeight: 0
-  cohesionWeight: 2.21
-  separationWeight: 5
-  alignmentWeight: 5
+  cohesionWeight: 4
+  separationWeight: 1.35
+  alignmentWeight: 3

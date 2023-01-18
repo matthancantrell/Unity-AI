@@ -487,7 +487,20 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 64084461875667276, guid: 59c52aad69955654794f62765f1da656, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64084461875667276, guid: 59c52aad69955654794f62765f1da656, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64084461875667276, guid: 59c52aad69955654794f62765f1da656, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 64084461875667276, guid: 59c52aad69955654794f62765f1da656, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 59c52aad69955654794f62765f1da656, type: 3}
 --- !u!4 &5539608198641776186 stripped
 Transform:
@@ -499,6 +512,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1618797515792128, guid: 59c52aad69955654794f62765f1da656, type: 3}
   m_PrefabInstance: {fileID: 5543476565584854188}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &7026769855309211384
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5542702821222605740}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 153.04543
+  m_Center: {x: 0, y: -6.23411, z: 9.500336}
 --- !u!114 &3568979679110329241
 MonoBehaviour:
   m_ObjectHideFlags: 0

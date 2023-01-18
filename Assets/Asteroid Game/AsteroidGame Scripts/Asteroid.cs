@@ -15,6 +15,8 @@ public class Asteroid : MonoBehaviour
 
     void OnDestroy()
     {
+        var gameManager = FindObjectOfType<AsteroidGameManager>();
+        gameManager.AddPoints(100);
         Instantiate(explosion, transform.position, transform. rotation);
     }
 
