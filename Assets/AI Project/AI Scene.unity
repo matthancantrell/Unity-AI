@@ -252,8 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2b8c031b6c1a044857e16f7b918006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent01: {fileID: 4262962702857232557, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
-  agent02: {fileID: 2040036992471146151, guid: a8b5784c3f860ef448d39e57dfe2ef91, type: 3}
+  agents:
+  - {fileID: 4262962702857232557, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
+  - {fileID: 2040036992471146151, guid: a8b5784c3f860ef448d39e57dfe2ef91, type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 8

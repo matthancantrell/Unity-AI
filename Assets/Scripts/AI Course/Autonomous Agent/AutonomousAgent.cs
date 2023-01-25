@@ -56,7 +56,6 @@ public class AutonomousAgent : Agent
 
         Vector3 position = transform.position;
         transform.position = Utilities.Wrap(transform.position, new Vector3(-20, -20, -20), new Vector3(20, 20, 20));
-        position.y = 0;
-		transform.position = position;
+        position.y = 1;
 	}
 }

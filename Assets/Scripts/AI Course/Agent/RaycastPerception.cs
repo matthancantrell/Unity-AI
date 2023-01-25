@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class RayCastPerception : Perception
+public class RaycastPerception : Perception
 {
 	public Transform raycastTransform;
 	[Range(2, 50)] public int numRaycast = 2;

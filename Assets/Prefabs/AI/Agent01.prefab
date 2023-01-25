@@ -214,10 +214,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagName: Agent02
-  distance: 15
-  maxAngle: 80
+  distance: 1
+  maxAngle: 45
   raycastTransform: {fileID: 5470709602350220706}
-  numRaycast: 16
+  numRaycast: 2
 --- !u!114 &-2988883368691686650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,10 +231,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagName: Agent01
-  distance: 10
-  maxAngle: 150
+  distance: 1
+  maxAngle: 45
   raycastTransform: {fileID: 5470709602350220706}
-  numRaycast: 24
+  numRaycast: 2
 --- !u!114 &3889693804069798188
 MonoBehaviour:
   m_ObjectHideFlags: 0

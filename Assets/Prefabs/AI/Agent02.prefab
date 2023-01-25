@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5730236476282691380, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
+      propertyPath: tagName
+      value: Agent01
+      objectReference: {fileID: 0}
+    - target: {fileID: -2988883368691686650, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
+      propertyPath: tagName
+      value: Agent02
+      objectReference: {fileID: 0}
     - target: {fileID: 136685859424050569, guid: 24f2ea8104f44ea4bbedb8d89c5c7000, type: 3}
       propertyPath: maxSpeed
       value: 1.25
