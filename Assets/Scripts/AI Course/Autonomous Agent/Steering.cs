@@ -88,22 +88,21 @@ public static class Steering
         return force;
     }
 
-    public static Vector3 Alignment(Agent agent, GameObject[] neighbors, float radius)
-    {
-        Vector3 averageVelocity = Vector3.zero;
+	public static Vector3 Alignment(Agent agent, GameObject[] neighbors)
+	{
+		Vector3 averageVelocity = Vector3.zero;
+		// accumulate velocity of neighbors (velocity = forward direction movement) 
+		foreach (GameObject neighbor in neighbors)
+		{
+			// need to get the Agent component of the game object and then movement velocity 
+			averageVelocity += neighbor.GetComponent<Agent>().movement.velocity;
+		}
+		// calculate the average by dividing the average velocity by the number of neighbors
+		averageVelocity /= neighbors.Length;
 
-        // Accumulate Velocity Of Neighbors (velocity = forward direction of movement)
-        foreach (GameObject neighbor in neighbors)
-        {
-            // Need To Get The Agent Component Of The Game Object And Then movement velocity
-            averageVelocity += neighbor.GetComponent<Agent>().movement.velocity;
-        }
-        // Calculate avg. by dividing the avg. velocity by the # of neighbors
-        averageVelocity /= neighbors.Length;
+		// steer towards the average velocity of the neighbors 
+		Vector3 force = CalculateSteering(agent, averageVelocity);
 
-        // Steer Towards the avg. velocity of the neighbors
-        Vector3 force = CalculateSteering(agent, averageVelocity);
-
-        return force;
-    }
+		return force;
+	}
 }

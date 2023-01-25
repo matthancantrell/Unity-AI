@@ -1,28 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class AgentSpawner : MonoBehaviour
 {
-    public Agent[] agents;
-    public LayerMask layerMask;
-    int index = 0;
+	public Agent[] agents;
+	public LayerMask layerMask;
 
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Tab)) index = (++index % agents.Length);
+	int index = 0;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-/*            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, layerMask))
-            {
-                Instantiate(agent01, hitInfo.point, Quaternion.identity);
-            }*/
-        }
-/*        if (Physics.Raycast(ray out RaycastHit hitInfo, 100, layerMask))
-        {
-            Instantiate(agents[index], hitInfo.point, Quaternion.AngleAxis(Random.Range(0, 360)), );
-        }*/
-    }
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Tab)) index = ++index % agents.Length;
+
+		if (Input.GetMouseButton(0) || (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftControl)))
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, layerMask))
+			{
+				Instantiate(agents[index], hitInfo.point, Quaternion.AngleAxis(Random.Range(0, 360), Vector3.up));
+			}
+		}
+	}
 }

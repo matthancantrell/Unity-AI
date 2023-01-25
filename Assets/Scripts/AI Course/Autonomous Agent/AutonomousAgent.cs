@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AutonomousAgent : Agent
 {
@@ -20,10 +21,11 @@ public class AutonomousAgent : Agent
         {
             Debug.DrawLine(transform.position, gameObject.transform.position);
         }
+
         if (gameObjects.Length > 0)
         {
-            movement.ApplyForce(Steering.Flee(this, gameObjects[0]) * data.fleeWeight);
-            movement.ApplyForce(Steering.Seek(this, gameObjects[0]) * data.seekWeight);
+			movement.ApplyForce(Steering.Seek(this, gameObjects[0]) * data.seekWeight);
+			movement.ApplyForce(Steering.Flee(this, gameObjects[0]) * data.fleeWeight);
         }
 
         // Flocking
@@ -34,7 +36,7 @@ public class AutonomousAgent : Agent
             {
                 movement.ApplyForce(Steering.Cohesion(this, gameObjects) * data.cohesionWeight);
                 movement.ApplyForce(Steering.Seperation(this, gameObjects, data.separationRadius) * data.separationWeight);
-                movement.ApplyForce(Steering.Alignment(this, gameObjects, data.separationRadius) * data.alignmentWeight);
+                movement.ApplyForce(Steering.Alignment(this, gameObjects) * data.alignmentWeight);
             }
         }
 
@@ -52,9 +54,9 @@ public class AutonomousAgent : Agent
             movement.ApplyForce(Steering.Wander(this));
         }
 
+        Vector3 position = transform.position;
         transform.position = Utilities.Wrap(transform.position, new Vector3(-20, -20, -20), new Vector3(20, 20, 20));
-    }
-
-
-
+        position.y = 0;
+		transform.position = position;
+	}
 }
