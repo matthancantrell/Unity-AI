@@ -10,6 +10,14 @@ public class NavPath : MonoBehaviour
 
 	public NavNode startNode { get; set; }
 	public NavNode endNode { get; set; }
+	public EndAction endAction = EndAction.RANDOM;
+
+	public enum EndAction
+	{
+		RANDOM,
+		PING_PONG,
+		STOP
+	}
 
 	public void StartPath()
 	{
@@ -24,6 +32,21 @@ public class NavPath : MonoBehaviour
 		// check if noode index is at the end of the path
 		if (index == path.Count - 1)
 		{
+
+			if (endAction == EndAction.STOP)
+			{
+				return null;
+			}
+			else if (endAction == EndAction.PING_PONG)
+			{
+				SwapStartAndEndNode();
+			}
+			else if (endAction == EndAction.RANDOM)
+			{
+				SetRandomEndNode();
+			}
+
+
 			SetRandomEndNode();
 			// generate new path
 			GeneratePath();
@@ -35,6 +58,13 @@ public class NavPath : MonoBehaviour
 		NavNode nextNode = path[index + 1];
 
 		return nextNode;
+	}
+
+	private void SwapStartAndEndNode()
+	{
+		NavNode tempnode = startNode;
+		startNode = endNode;
+		endNode = tempnode;
 	}
 
 	private void SetRandomEndNode()
@@ -51,7 +81,7 @@ public class NavPath : MonoBehaviour
 	private void GeneratePath()
 	{
 		NavNode.ResetNodes();
-		Path.Dijkstra(startNode, endNode, ref path);
+		Path.AStar(startNode, endNode, ref path);
 	}
 
 	private void OnDrawGizmos()

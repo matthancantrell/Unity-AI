@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RollerPlayer : MonoBehaviour
 {
+    [SerializeField] private Transform view;
     [SerializeField] private float maxForce = 5;
 
     private Vector3 force;
@@ -23,11 +24,12 @@ public class RollerPlayer : MonoBehaviour
         direction.x = Input.GetAxis("Horizontal");
         direction.z = Input.GetAxis("Vertical");
 
-        force = direction * maxForce;
+        Quaternion viewspace = Quaternion.AngleAxis(view.rotation.eulerAngles.y, Vector3.up);
+        force =  viewspace * (direction * maxForce);
 
         if (Input.GetButtonDown("Jump"))
         {
-            rb.AddForce(Vector3.up, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 10, ForceMode.Impulse);
         }
     }
 
