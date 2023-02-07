@@ -15,13 +15,10 @@ public class DistancePerception : Perception
 			if (collider.gameObject == gameObject) continue;
 			if (tagName == "" || collider.CompareTag(tagName))
 			{
-				result.Add(collider.gameObject);
-				// calculate angle from transform forward vector to direction of game object 
+				// calculate angle from transform forward vector to direction of game object
 				Vector3 direction = (collider.transform.position - transform.position).normalized;
 				float angle = Vector3.Angle(transform.forward, direction);
-
-				//float cos = Vector3.Dot(transform.forward, direction);
-				//float angle = Mathf.Acos(cos) * Mathf.Rad2Deg;
+				// if angle is less than max angle, add game object
 				if (angle <= maxAngle)
 				{
 					result.Add(collider.gameObject);
@@ -29,8 +26,10 @@ public class DistancePerception : Perception
 			}
 		}
 
-		result.Sort(CompareDistance);
+		// sort results by distance
+		SortByDistance(result);
 
 		return result.ToArray();
 	}
+
 }

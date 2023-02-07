@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RaycastPerception : Perception
@@ -13,29 +11,52 @@ public class RaycastPerception : Perception
 	{
 		List<GameObject> result = new List<GameObject>();
 
+
 		Vector3[] directions = Utilities.GetDirectionsInCircle(numRaycast, maxAngle);
 		foreach (var direction in directions)
 		{
-			// cast ray from transform position towards direction 
-
+			// cast ray from transform position towards direction
 			Ray ray = new Ray(raycastTransform.position, raycastTransform.rotation * direction);
 			if (Physics.Raycast(ray, out RaycastHit raycastHit, distance))
 			{
-				// don't perceive self 
+				// don't perceive self
 				if (raycastHit.collider.gameObject == gameObject) continue;
-				// check for tag match 
-
+				// check for tag match
 				if (tagName == "" || raycastHit.collider.CompareTag(tagName))
 				{
-					// add game object if ray hit and tag matches 
+					// add game object if ray hit and tag matches
 					result.Add(raycastHit.collider.gameObject);
 				}
 			}
+
 		}
 
-		// sort results by distance 
+		// sort results by distance
 		result.Sort(CompareDistance);
 
 		return result.ToArray();
 	}
 }
+
+//// angle offset = angle between each ray
+//float angleOffset = (maxAngle * 2) / (numRaycast - 1);
+//for (int i = 0; i < numRaycast; i++)
+//{
+//	// set ray direction from rotation
+//	Quaternion rotation = Quaternion.AngleAxis(-maxAngle + (angleOffset * i), Vector3.up);
+//	Vector3 direction = rotation * raycastTransform.forward;
+
+//	// cast ray from transform position towards direction
+//	Ray ray = new Ray(raycastTransform.position, direction);
+//	if (Physics.Raycast(ray, out RaycastHit raycastHit, distance))
+//	{
+//		// don't perceive self
+//		if (raycastHit.collider.gameObject == gameObject) continue;
+//		// check for tag match
+//		if (tagName == "" || raycastHit.collider.CompareTag(tagName))
+//		{
+//			// add game object if ray hit and tag matches
+//			result.Add(raycastHit.collider.gameObject);
+//		}
+//	}
+//}

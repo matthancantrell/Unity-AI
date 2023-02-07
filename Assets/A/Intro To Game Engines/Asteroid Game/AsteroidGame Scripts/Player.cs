@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject prefab;
-    [SerializeField, Range(1, 50), Tooltip("Speed Control")]public float speed = 0.0f;
+   // [SerializeField, Range(1, 50), Tooltip("Speed Control")]public float speed = 0.0f;
     [Range(0, 360)]public float rotationRate = 180;
     public Transform bulletSpawnLocation;
 
@@ -21,11 +21,11 @@ public class Player : MonoBehaviour
         Debug.Log("Player: Awake");
     }
 
-    private void Update()
+*//*    private void Update()
     {
-        /*transform.position = new Vector3(2, 3, 2);
+        *//*transform.position = new Vector3(2, 3, 2);
         transform.rotation = Quaternion.Euler(30, 30, 30);
-        transform.localScale = Vector3.one * 5;*/
+        transform.localScale = Vector3.one * 5;*//*
 
         Vector3 direction = Vector3.zero;
         direction.z = Input.GetAxis("Vertical");
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
         Quaternion rotate = Quaternion.Euler(rotation * rotationRate * Time.deltaTime);
         transform.rotation = transform.rotation * rotate;
-        transform.Translate(direction * speed * Time.deltaTime);
+        //transform.Translate(direction * speed * Time.deltaTime); THIS ONE
 
         //transform.position += direction * speed * Time.deltaTime;
 
@@ -44,8 +44,8 @@ public class Player : MonoBehaviour
             Debug.Log("Pew!");
             // Make Gamesound
             Instantiate(prefab, bulletSpawnLocation.position, bulletSpawnLocation.rotation);
-        }
-    }
+        *//*}
+*//*    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -54,4 +54,4 @@ public class Player : MonoBehaviour
             FindObjectOfType<AsteroidGameManager>()?.SetGameOver();
         }
     }
-}
+}*/

@@ -1,37 +1,132 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SocialPlatforms.Impl;
 
-public class RollerGameManager : Singleton<RollerGameManager>
-{
-	[SerializeField] Slider healthMeter;
-	[SerializeField] TMP_Text scoreUI;
-	[SerializeField] GameObject gameOverUI;
+public class RollerGameManager : Singleton<RollerGameManager> {
+	[Header("Events")]
+	[SerializeField] EventRouter StartGameEvent;
+	[SerializeField] EventRouter StopGameEvent;
+	[SerializeField] EventRouter WinGameEvent;
 
-	[SerializeField] GameObject playerPrefab;
-	[SerializeField] Transform playerStart;
+	[SerializeField] Slider HealthMeter;
+	[SerializeField] TMP_Text ScoreUI;
+	[SerializeField] TMP_Text LivesUI;
+	[SerializeField] GameObject GameOverUI;
+	[SerializeField] GameObject TitleUI;
 
-	private void Start()
-	{
-		Instantiate(playerPrefab, playerStart.position, playerStart.rotation);
+	[SerializeField] AudioSource GameMusic;
+
+	[SerializeField] GameObject PlayerPrefab;
+	[SerializeField] Transform PlayerStart;
+
+	int Lives = 0;
+
+	public enum State {
+		TITLE,
+		START_GAME,
+		START_LEVEL,
+		PLAY_GAME,
+		PLAYER_DEAD,
+		GAME_OVER
 	}
 
-	public void SetHealth(int health)
-	{
+	State state = State.TITLE;
+	float StateTimer = 0;
 
-		healthMeter.value = Mathf.Clamp(health, 0, 100);
+	private void Start() {
+		WinGameEvent.OnEvent += SetGameWin;
 	}
 
-	public void SetScore(int score)
+	public void SetState(RollerGameManager.State state)
 	{
-		scoreUI.text = score.ToString();
+		this.state = state;
 	}
 
-	public void SetGameOver()
-	{
-		gameOverUI.SetActive(true);
+	private void Update() {
+
+		//Debug.Log(state);
+
+		switch (state) {
+			case State.TITLE:
+				TitleUI.SetActive(true);
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+				Time.timeScale= 0;
+				break;
+			case State.START_GAME:
+				TitleUI.SetActive(false);
+				Time.timeScale = 1;
+				Cursor.lockState = CursorLockMode.Locked;
+				Lives = 3;
+				SetLivesUI(Lives);
+				state = State.START_LEVEL;
+                break;
+			case State.START_LEVEL:
+                StartGameEvent.Notify();
+				GameMusic.Play();
+                Instantiate(PlayerPrefab, PlayerStart.position, PlayerStart.rotation);
+				state = State.PLAY_GAME;
+                break;
+			case State.PLAY_GAME:
+				//
+				break;
+			case State.PLAYER_DEAD:
+				StateTimer -= Time.deltaTime;
+				if (StateTimer <= 0) {
+					state = State.START_LEVEL;
+				}
+                    break;
+			case State.GAME_OVER:
+				GameOverUI.SetActive(true);
+				StateTimer -= Time.deltaTime;
+				if (StateTimer <= 0) { 
+					GameOverUI.SetActive(false);
+					state = State.TITLE;
+				}
+                break;
+			default:
+				break;
+		}
 	}
 
+	public void SetHealth(int Health) { 
+		HealthMeter.value = Mathf.Clamp(Health, 0, 100);
+	}
+
+	public void SetScore(int Score) {
+		ScoreUI.text = Score.ToString();
+	}
+
+	public void SetLivesUI(int lives) { 
+		LivesUI.text = lives.ToString();
+	}
+
+	public void SetPlayerDead() { 
+		StopGameEvent.Notify();
+		GameMusic.Stop();
+
+		Lives--;
+		SetLivesUI(Lives);
+		state = (Lives == 0) ? State.GAME_OVER : State.PLAYER_DEAD;
+		StateTimer = 3;
+	}
+
+	public void SetGameOver() {
+		StopGameEvent.Notify();
+		GameMusic.Stop();
+		GameOverUI.SetActive(true);
+		state = State.GAME_OVER;
+		StateTimer = 3;
+	}
+
+	public void SetGameWin() {
+		Debug.Log("Congratulations You Won!");
+	}
+
+	public void OnStartGame() { 
+		state = State.START_GAME;
+	}
 }

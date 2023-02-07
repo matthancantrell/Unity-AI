@@ -2,34 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RollerCamera : MonoBehaviour
-{
-	[SerializeField] private Transform target;
-	[SerializeField, Range(2, 20)] private float distance;
-	[SerializeField, Range(20, 80)] private float pitch = 30;
-	[SerializeField, Range(0.1f, 5)] private float sensitivity;
+public class RollerCamera : MonoBehaviour {
+    [SerializeField] Transform Target;
+    [SerializeField, Range(2, 20)] private float Distance;
+    [SerializeField, Range(20, 80)] private float Pitch;
+    [SerializeField, Range(0.1f, 5)] private float Sensitivity;
 
-	private float yaw = 0;
+    private float Yaw = 0;
 
-	void LateUpdate()
-	{
-		yaw += Input.GetAxis("Mouse X") * sensitivity;
-		//pitch += Input.GetAxis("Mouse Y") * pitch;
+    void LateUpdate() {
+        if (Target == null) return;
 
-		Quaternion qyaw = Quaternion.AngleAxis(yaw, Vector3.up);
-		Quaternion qpitch = Quaternion.AngleAxis(pitch, Vector3.right);
-		Quaternion rotation = qyaw * qpitch;
+        Yaw += Input.GetAxis("Mouse X") * Sensitivity;
 
-		Vector3 offset = rotation * Vector3.back * distance;
+        Quaternion QYaw = Quaternion.AngleAxis(Yaw, Vector3.up);
+        Quaternion QPitch = Quaternion.AngleAxis(Pitch, Vector3.right);
+        Quaternion Rotation = QYaw * QPitch;
 
-		transform.position = target.position + offset;
-		transform.rotation = Quaternion.LookRotation(-offset);
-	}
+        Vector3 Offset = Rotation * Vector3.back * Distance;
 
-	public void SetTarget(Transform target)
-	{
-		this.target = target;
-		yaw = target.rotation.eulerAngles.y;
-	}
+        transform.position = Target.position + Offset;
+        transform.rotation = Quaternion.LookRotation(-Offset);
+    }
+
+    public void SetTarget(Transform Target) { 
+        this.Target = Target;
+        Yaw = Target.rotation.eulerAngles.y;
+    }
 }
-

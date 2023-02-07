@@ -1,43 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
-{
-	[SerializeField] float maxHealth = 100;
-	public float health { get; set; }
-	private bool isDead = false;
+public class Health : MonoBehaviour {
+    [SerializeField] float MaxHealth = 100;
+    public float health { get; set; }
+    private bool IsDead { get; set; }
 
-	public Action onDamage;
-	public Action onHeal;
-	public Action onDeath;
+    public Action OnDamage;
+    public Action OnHeal;
+    public Action OnDeath;
 
-	private void Awake()
-	{
-		health = maxHealth;
-	}
 
-	public void OnApplyDamage(float damage)
-	{
-		if (isDead) return;
+    private void Awake() {
+        health = MaxHealth;
+    }
 
-		health -= damage;
-		health = Mathf.Clamp(health, 0, maxHealth);
-		onDamage?.Invoke();
-		if (health <= 0)
-		{
-			isDead = true;
-			onDeath?.Invoke();
-		}
-	}
+    public void OnApplyDamage(float Damage) {
+        if (IsDead) return;
 
-	public void OnApplyHealth(float heal)
-	{
-		if (isDead) return;
+        health -= Damage;
+        health = Mathf.Clamp(health, 0, MaxHealth);
+        OnDamage?.Invoke();
+        if (health <= 0) {
+            IsDead = true;
+            OnDeath?.Invoke();
+        }
+    }
 
-		health += heal;
-		health = Mathf.Clamp(health, 0, maxHealth);
-		onHeal?.Invoke();
-	}
+    public void OnApplyHealth(float Heal) {
+        if (IsDead) return;
+
+        health += Heal;
+        health = Mathf.Clamp(health, 0, MaxHealth);
+        OnHeal?.Invoke();
+    }
 }

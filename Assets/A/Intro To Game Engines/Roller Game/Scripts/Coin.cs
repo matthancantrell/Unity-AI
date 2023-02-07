@@ -5,19 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(CollisionEvent))]
 public class Coin : Interactable
 {
-	void Start()
-	{
-		GetComponent<CollisionEvent>().onEnter += OnInteract;
-	}
 
-	public override void OnInteract(GameObject go)
-	{
-		if (go.TryGetComponent<RollerPlayer>(out RollerPlayer player))
-		{
-			player.AddPoints(100);
-		}
+    public GameObject sound;
+    void Start()
+    {
+        GetComponent<CollisionEvent>().OnEnter += OnInteract;
+    }
 
-		if (interactFX != null) Instantiate(interactFX, transform.position, Quaternion.identity);
-		if (destroyOnInteract) Destroy(gameObject);
-	}
+    public override void OnInteract(GameObject go)
+    {
+        if (go.TryGetComponent<RollerPlayer>(out RollerPlayer player))
+        {
+            player.AddPoints(100);
+        }
+
+        if (interactFX != null) Instantiate(interactFX, transform.position, Quaternion.identity);
+        if (destroyOnInteract) Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        Instantiate(sound);
+    }
 }

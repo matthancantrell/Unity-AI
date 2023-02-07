@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Priority_Queue;
 using System.Linq;
+using Priority_Queue;
 
 public static class Path
 {
 	public static bool Dijkstra(NavNode start, NavNode end, ref List<NavNode> path)
 	{
-		bool found = false;
-
 		// create priority queue
 		var nodes = new SimplePriorityQueue<NavNode>();
 
@@ -17,13 +15,13 @@ public static class Path
 		start.cost = 0;
 		// enqueue source node with the source cost as the priority
 		nodes.EnqueueWithoutDuplicates(start, start.cost);
-		// TODO
 
 		// update until found or no nodes in queue
+		bool found = false;
 		while (!found && nodes.Count > 0)
 		{
 			// dequeue node
-			var node = nodes.Dequeue(); ; // <-TODO
+			var node = nodes.Dequeue();
 
 			// check if node is the destination node
 			if (node == end)
@@ -36,7 +34,7 @@ public static class Path
 			foreach (var neighbor in node.neighbors)
 			{
 				// calculate cost to neighbor = node cost + distance to neighbor
-				float cost = node.cost + Vector3.Distance(node.transform.position, neighbor.transform.position); // <- TODO
+				float cost = node.cost + Vector3.Distance(node.transform.position, neighbor.transform.position);
 				// if cost < neighbor cost, add to priority queue
 				if (cost < neighbor.cost)
 				{
@@ -64,10 +62,9 @@ public static class Path
 		return found;
 	}
 
+
 	public static bool AStar(NavNode start, NavNode end, ref List<NavNode> path)
 	{
-		bool found = false;
-
 		// create priority queue
 		var nodes = new SimplePriorityQueue<NavNode>();
 
@@ -76,13 +73,13 @@ public static class Path
 		float heuristic = Vector3.Distance(start.transform.position, end.transform.position);
 		// enqueue source node with the source cost as the priority
 		nodes.EnqueueWithoutDuplicates(start, start.cost + heuristic);
-		// TODO
 
 		// update until found or no nodes in queue
+		bool found = false;
 		while (!found && nodes.Count > 0)
 		{
 			// dequeue node
-			var node = nodes.Dequeue(); ; // <-TODO
+			var node = nodes.Dequeue();
 
 			// check if node is the destination node
 			if (node == end)
@@ -95,14 +92,15 @@ public static class Path
 			foreach (var neighbor in node.neighbors)
 			{
 				// calculate cost to neighbor = node cost + distance to neighbor
-				float cost = node.cost + Vector3.Distance(node.transform.position, neighbor.transform.position); // <- TODO
-																												 // if cost < neighbor cost, add to priority queue
+				float cost = node.cost + Vector3.Distance(node.transform.position, neighbor.transform.position);
+				// if cost < neighbor cost, add to priority queue
 				if (cost < neighbor.cost)
 				{
 					// set neighbor cost to cost
 					neighbor.cost = cost;
 					// set neighbor parent to node
 					neighbor.parent = node;
+
 					heuristic = Vector3.Distance(neighbor.transform.position, end.transform.position);
 					// enqueue without duplicates neighbor with cost as priority
 					nodes.EnqueueWithoutDuplicates(neighbor, neighbor.cost + heuristic);
@@ -123,6 +121,7 @@ public static class Path
 
 		return found;
 	}
+
 
 	public static void CreatePathFromParents(NavNode node, ref List<NavNode> path)
 	{
